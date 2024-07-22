@@ -1,20 +1,24 @@
-cc = gcc
-CFLAGS = -std=c11 -Wall -g
-SRCS = test.c
-OBJS = $(SRCS:.c=.o)
+CC = g++
+CPPFLAGS = -std=c++20 -g -Wall
+SRCS = test.cpp
+OBJS = $(SRCS:.cpp=.o)
 BIN = test
 
 .PHONY: depend clean
 
-all: $(BIN)
+all:    $(BIN)
 
-$(BIN): $(OBJS)
-	$(CC) $(CFLAGS) -o $(BIN) $(OBJS)
+$(BIN): $(OBJS) 
+	$(CC) $(CPPFLAGS) -o $(BIN) $(OBJS)
 
-.c.o:
-	$(CC) $(CFLAGS) -c $< -o $@
+.cpp.o:
+	$(CC) $(CPPFLAGS) -c $<  -o $@
 
 clean:
-	rm *.o $(BIN)
+	$(RM) *.o *~ $(BIN)
+
+depend: $(SRCS)
+	makedepend $(INCLUDES) $^
+
 run:
 	./$(BIN)
